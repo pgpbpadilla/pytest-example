@@ -1,4 +1,4 @@
-from src.gorila import banana
+from gorila import banana
 
 if __name__ == "__main__":
-    banana.peel()
+    print('Bananas are {}!!'.format(banana.peel()))
