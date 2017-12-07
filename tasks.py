@@ -1,10 +1,13 @@
 from invoke import task
 
-image_name = 'gorila:latest'
+image_name = 'gorila'
 
 @task
-def build(ctx):
-    ctx.run('docker build -t {} .'.format(image_name), pty=True)
+def build(ctx, no_cache=False):
+    opts = ''
+    if no_cache:
+        opts = '--no-cache'
+    ctx.run('docker build {} -t {} .'.format(opts, image_name), pty=True)
 
 
 @task(pre=[build])
@@ -13,14 +16,15 @@ def run(ctx):
 
 
 @task
-def tdd(ctx):
-    test_cmd = 'ptw -p'
+def tdd(ctx, cmd=''):
+    test_cmd = 'ptw -p -c'
     cmd_parts = [
         'docker run -it',
-        '-v `pwd`/test:/app/src/test',
+        '-e PYTHONDONTWRITEBYTECODE=1',  # Don't generate __pychache__
+        '-v `pwd`:/app/src',
         '-w /app/src',
         image_name,
-        test_cmd
+        test_cmd if cmd == '' else cmd
     ]
     cmd = ' '.join(cmd_parts)
     ctx.run(cmd, pty=True, echo=True)

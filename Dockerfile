@@ -1,11 +1,11 @@
 FROM python:3.6-alpine
 
-RUN mkdir -p /app/src
-WORKDIR /app/src
+RUN mkdir -p /app
+WORKDIR /app
 
-COPY requirements.txt /app/src
+COPY requirements.txt /app
 RUN pip install -r requirements.txt
 
-COPY . /app/src
+COPY . /app/
 
-CMD ["python", "main.py"]
+CMD ["python", "src/main.py"]

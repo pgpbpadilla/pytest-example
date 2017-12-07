@@ -1,4 +1,4 @@
-from gorila import banana
+from src.gorila import banana
 
 if __name__ == "__main__":
     banana.peel()
