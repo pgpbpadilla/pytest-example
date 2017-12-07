@@ -1,0 +1,2 @@
+- `virtualenv .ve`
+- `pip install -r dev-requirements.txt`
